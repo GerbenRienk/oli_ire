@@ -189,7 +189,7 @@ class _Tokens(object):
             ('sSessionKey', session_key),
             ('iSurveyID', survey_id),
             ('iStart', 0),
-            ('iLimit', 1000),
+            ('iLimit', 14000),
             ('bUnused', False),
             ('aAttributes', ('attributes_bit'))
         ])
@@ -199,6 +199,29 @@ class _Tokens(object):
         data = data.replace('"attributes_bit"', '["completed"]')
         response = self.api.utils.request(data)
         return response
+
+    def get_participant_properties(self, session_key, survey_id, token_id):    
+        """
+        get_participant_properties
+        /**
+        * RPC Routine to return settings of a token/participant of a survey .
+        *
+        * @access public
+        * @param string $sSessionKey Auth credentials
+        * @param int $iSurveyID Id of the Survey to get token properties
+        * @param int $iTokenID Id of the participant to check
+        * @param array $aTokenProperties The properties to get
+        * @return array The requested values
+        */
+        """
+        params = OrderedDict([
+            ('sSessionKey', session_key),
+            ('iSurveyID', survey_id),
+            ('iTokenID', token_id),
+            ('aaTokenProperties', ('token'))
+           ])
+        
+        return
 
     def delete_participants(self, session_key, survey_id, tokens):
         """

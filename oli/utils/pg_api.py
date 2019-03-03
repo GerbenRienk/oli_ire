@@ -153,10 +153,13 @@ class ConnToOliDB(object):
         Method to write study_subject_oid to table ls_responses
         """
         cursor = self._conn.cursor()  
+        # escape the single quotes
+        data_ws_request = data_ws_request.replace("'", "''")
         #print("in WriteDataWSRequest: ", str(sid), str(response_id), data_ws_request)
         sql_statement = """Update ls_responses set data_ws_request='%s' where sid=%i and response_id=%i""" % (data_ws_request, sid, response_id)
         try:
             cursor.execute(sql_statement)
+            #print('after sql execute: %s' % sql_statement)
         except:
             print ("WriteDataWSRequest: not able to execute: ", sql_statement)
         
@@ -169,6 +172,7 @@ class ConnToOliDB(object):
         """
         cursor = self._conn.cursor()  
         #print("in WriteDataWSResponse: ", str(sid), str(response_id), data_ws_response)
+        data_ws_response = data_ws_response.replace("'", "''")
         sql_statement = """Update ls_responses set data_ws_response='%s' where sid=%i and response_id=%i""" % (data_ws_response, sid, response_id)
         try:
             cursor.execute(sql_statement)
